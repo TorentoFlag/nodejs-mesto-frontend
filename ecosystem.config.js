@@ -1,18 +1,18 @@
-require('dotenv').config({ path: '.env.deploy' });
+require('dotenv').config({ path: '.env' });
 
 const {
-  USER, HOST, PATH, REF = 'origin/main',
+  DEPLOY_USER, DEPLOY_HOST, DEPLOY_PATH, DEPLOY_REF = 'origin/main',
 } = process.env;
 
 module.exports = {
   deploy: {
     production: {
-      user: USER,
-      host: HOST,
-      ref: REF,
+      user: DEPLOY_USER,
+      host: DEPLOY_HOST,
+      ref: DEPLOY_REF,
       repo: 'https://github.com/TorentoFlag/nodejs-mesto-frontend',
-      path: PATH,
-      'pre-deploy-local': `scp -v .env.deploy ${USER}@${HOST}:${PATH}`,
+      path: DEPLOY_PATH,
+      'pre-deploy-local': `scp -v .env ${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}`,
       'post-deploy': 'npm i && NODE_OPTIONS--openssl-legacy-provider npm run build',
     },
   },
